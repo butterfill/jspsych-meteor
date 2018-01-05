@@ -79,7 +79,7 @@ timeline.push createNum(0)
 # after which the participant sees a ‘let’s try that again’ screen?
 timeline.push 
   type : 'single-stim'
-  stimulus : '/img/samsonDax/stimuliPics-SkSa2016-E1/0000.bmp'
+  stimulus : '/img/samsonDax/stimuliPics-SkSa2016-E1/0000.jpg'
   choices : ['B']
   timing_response : -1
   response_ends_trial : true
@@ -96,7 +96,7 @@ timeline.push createCross()
 timeline.push createNum(3)
 timeline.push 
   type : 'single-stim'
-  stimulus : '/img/samsonDax/Train_fam_full/Training1.bmp'
+  stimulus : '/img/samsonDax/Train_fam_full/Training1.jpg'
   choices : ['N']
   timing_response : -1
   response_ends_trial : true
@@ -135,16 +135,16 @@ insertTrainingStim = (num, imgName, data) ->
       jsPsych.data.addDataToLastTrial({responseIsCorrect: correct})
     
 
-insertTrainingStim(1, 'Training2.bmp', {numberMatchesDots:true} )  
-insertTrainingStim(2, 'Training1.bmp', {numberMatchesDots:true} )  
-insertTrainingStim(3, 'Training3.bmp', {numberMatchesDots:true} )  
+insertTrainingStim(1, 'Training2.jpg', {numberMatchesDots:true} )  
+insertTrainingStim(2, 'Training1.jpg', {numberMatchesDots:true} )  
+insertTrainingStim(3, 'Training3.jpg', {numberMatchesDots:true} )  
 # §ISSUE from here on, PPT did not specify which numbers to show so I made them up
-insertTrainingStim(2, 'Training4.bmp', {numberMatchesDots:false} )  
-insertTrainingStim(1, 'Training5.bmp', {numberMatchesDots:false} )  
-insertTrainingStim(3, 'Training6.bmp', {numberMatchesDots:true} )  
-insertTrainingStim(0, 'Training7.bmp', {numberMatchesDots:false} )  
-insertTrainingStim(1, 'Training8.bmp', {numberMatchesDots:false} )  
-insertTrainingStim(3, 'Training9.bmp', {numberMatchesDots:true} )  
+insertTrainingStim(2, 'Training4.jpg', {numberMatchesDots:false} )  
+insertTrainingStim(1, 'Training5.jpg', {numberMatchesDots:false} )  
+insertTrainingStim(3, 'Training6.jpg', {numberMatchesDots:true} )  
+insertTrainingStim(0, 'Training7.jpg', {numberMatchesDots:false} )  
+insertTrainingStim(1, 'Training8.jpg', {numberMatchesDots:false} )  
+insertTrainingStim(3, 'Training9.jpg', {numberMatchesDots:true} )  
 
 # end of practice block 1
 # §ISSUE Should we report accuracy to participant?
@@ -162,49 +162,49 @@ timeline.push createInstructions([
     <p>Before you do the task on your own, you will view a few more slides.</p>
     <p>Press the spacebar to continue. </p>
   """
-  ("<img src='/img/samsonDax/Train_fam_full/Fam#{x}.bmp' />" for x in [1..22])...
+  ("<img src='/img/samsonDax/Train_fam_full/Fam#{x}.jpg' />" for x in [1..22])...
 ])
 
 
 # -----------------------------------------------
 # Familiarization part 2: agent/mineral contrast task
 timeline.push createInstructions(
-  ("<img src='/img/samsonDax/Train_fam_full/FamP2_#{x}.bmp' />" for x in [1..3])
+  ("<img src='/img/samsonDax/Train_fam_full/FamP2_#{x}.jpg' />" for x in [1..3])
 )
 
 blicketMineralStimuli = [
   {
-    stimulus : '/img/samsonDax/Train_fam_full/FamP2_4.bmp'
+    stimulus : '/img/samsonDax/Train_fam_full/FamP2_4.jpg'
     data :
       isDax : false
       block : 'FAMILIARIZATION_PART_2'
   }
   {
-    stimulus : '/img/samsonDax/Train_fam_full/FamP2_5.bmp'
+    stimulus : '/img/samsonDax/Train_fam_full/FamP2_5.jpg'
     data :
       isDax : false
       block : 'FAMILIARIZATION_PART_2'
   }
   {
-    stimulus : '/img/samsonDax/Train_fam_full/FamP2_6.bmp'
+    stimulus : '/img/samsonDax/Train_fam_full/FamP2_6.jpg'
     data :
       isDax : false
       block : 'FAMILIARIZATION_PART_2'
   }
   {
-    stimulus : '/img/samsonDax/Train_fam_full/FamP2_7.bmp'
+    stimulus : '/img/samsonDax/Train_fam_full/FamP2_7.jpg'
     data :
       isDax : true
       block : 'FAMILIARIZATION_PART_2'
   }
   {
-    stimulus : '/img/samsonDax/Train_fam_full/FamP2_8.bmp'
+    stimulus : '/img/samsonDax/Train_fam_full/FamP2_8.jpg'
     data :
       isDax : true
       block : 'FAMILIARIZATION_PART_2'
   }
   {
-    stimulus : '/img/samsonDax/Train_fam_full/FamP2_9.bmp'
+    stimulus : '/img/samsonDax/Train_fam_full/FamP2_9.jpg'
     data :
       isDax : true
       block : 'FAMILIARIZATION_PART_2'
@@ -231,7 +231,7 @@ timeline.push
 # or whatever.
 # I’ve assumed '[KEY]' should be 'spacebar'. But the image still needs updating.
 timeline.push createInstructions([
-  "<img src='/img/samsonDax/Train_fam_full/FamP2_10.bmp' />"
+  "<img src='/img/samsonDax/Train_fam_full/FamP2_10.jpg' />"
 ])
 # exactly as before except that you should press spacebar when mineral, not when dax
 # NB: I didn’t use FamP2_11 ... FamP2_16 because I think these are identical to
@@ -261,7 +261,7 @@ timeline.push
 
 
 timeline.push createInstructions([
-  "<img src='/img/samsonDax/Train_fam_full/FamP2_17.bmp' />"
+  "<img src='/img/samsonDax/Train_fam_full/FamP2_17.jpg' />"
   """
     <p>Now you will complete a different version of the discs task.</p>
     <p>On each trial, you will first see a fixation cross (+). </p>
@@ -291,7 +291,7 @@ timeline.push createNum(0)
 # after which the participant sees a ‘let’s try that again’ screen?
 timeline.push 
   type : 'single-stim'
-  stimulus : '/img/samsonDax/stimuliPics-SkSa2016-E1/0S00.bmp'
+  stimulus : '/img/samsonDax/stimuliPics-SkSa2016-E1/0S00.jpg'
   choices : ['B']
   timing_response : -1
   response_ends_trial : true
@@ -307,7 +307,7 @@ timeline.push createYOU()
 timeline.push createNum(3)
 timeline.push 
   type : 'single-stim'
-  stimulus : '/img/samsonDax/stimuliPics-SkSa2016-E1/0S11.bmp'
+  stimulus : '/img/samsonDax/stimuliPics-SkSa2016-E1/0S11.jpg'
   choices : ['N']
   timing_response : -1
   response_ends_trial : true
@@ -323,7 +323,7 @@ timeline.push createDAX()
 timeline.push createNum(2)
 timeline.push 
   type : 'single-stim'
-  stimulus : '/img/samsonDax/stimuliPics-SkSa2016-E1/0S02.bmp'
+  stimulus : '/img/samsonDax/stimuliPics-SkSa2016-E1/0S02.jpg'
   choices : ['B']
   timing_response : -1
   response_ends_trial : true
@@ -339,7 +339,7 @@ timeline.push createDAX()
 timeline.push createNum(3)
 timeline.push 
   type : 'single-stim'
-  stimulus : '/img/samsonDax/stimuliPics-SkSa2016-E1/0S30.bmp'
+  stimulus : '/img/samsonDax/stimuliPics-SkSa2016-E1/0S30.jpg'
   choices : ['N']
   timing_response : -1
   response_ends_trial : true
@@ -395,7 +395,7 @@ createAllTrials = (blockName) ->
             else
               imgName = "0S"
               daxSeesNum = numDotsOnRightWall
-            imgName += "#{numDotsOnLeftWall}#{numDotsOnRightWall}.bmp"
+            imgName += "#{numDotsOnLeftWall}#{numDotsOnRightWall}.jpg"
             # console.log "/imgName #{imgName}"
           
             # work out which number to show
@@ -575,25 +575,29 @@ for daxIsFacing in ['left','right']
         imgName += "S0"
       else
         imgName += "0S"
-      imgName += "#{numDotsOnLeftWall}#{numDotsOnRightWall}.bmp"
+      imgName += "#{numDotsOnLeftWall}#{numDotsOnRightWall}.jpg"
       testImages.push(imgName)
+
+
 
 imagesToPreload = [
   testImages...
-  ("/img/samsonDax/Train_fam_full/Fam#{x}.bmp" for x in [1..22])...
-  ("/img/samsonDax/Train_fam_full/FamP2_#{x}.bmp" for x in [1..3])...
-  '/img/samsonDax/Train_fam_full/FamP2_10.bmp'
+  ("/img/samsonDax/Train_fam_full/Fam#{x}.jpg" for x in [1..22])...
+  ("/img/samsonDax/Train_fam_full/FamP2_#{x}.jpg" for x in [1..3])...
+  '/img/samsonDax/Train_fam_full/FamP2_10.jpg'
 ]
 
 
 
 Template.App_samsonDax01.events
   'click #init-jspsych' : (event, instance) ->
+    $('#init-jspsych').hide()
+    $('#please-wait').show()
     console.log "imagesToPreload ..."
     console.log imagesToPreload
-    jsPsych.pluginAPI.preloadImages( imagesToPreload, () -> 
-      
-      # add some data about the participant and experimenter
+    updateProgress = (numLoaded) ->
+      console.log "loaded #{numLoaded} images"
+    startExp = () -> 
       participantId = uuidv4()
       console.log "participantId: #{participantId}"
       # jsPsych.data.addProperties({
@@ -602,6 +606,8 @@ Template.App_samsonDax01.events
       #   experimenterEmail : Meteor.user().emails?[0]?.address
       #   study : "TESTING_0.1"
       # })
+      
+      $('#please-wait').hide()
       jsPsych.init({
         display_element : $("#jspsych-container")
         fullscreen : true
@@ -631,7 +637,7 @@ Template.App_samsonDax01.events
             # jsPsych.data.get().localSave('csv', "backup_#{participantId}.csv")
             jsPsych.data.localSave("backup_#{participantId}.csv", 'csv')
           )
-          
       })
-    )
+    jsPsych.pluginAPI.preloadImages( imagesToPreload, startExp, updateProgress )
+    
 
