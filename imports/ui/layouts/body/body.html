@@ -1,0 +1,23 @@
+<template name="App_body">
+  
+  <nav class='grey' role='navigation'>
+    <div class='nav-wrapper container'>
+      <a class='brand-logo' href='/'>experiment</a>
+      <div class='right'>
+        {{ >atNavButton }}
+      </div>
+    </div>
+  </nav>
+  
+  <div class='container'>
+    {{> Template.dynamic template=main}}
+  </div>
+</template>
+
+
+<template name="App_body_experiment">
+  
+  <div class='container'>
+    {{> Template.dynamic template=main}}
+  </div>
+</template>

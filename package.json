@@ -1,0 +1,13 @@
+{
+  "name": "jspsych-meteor-test",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "bcrypt": "^1.0.3",
+    "meteor-node-stubs": "^0.3.2",
+    "uuid": "^3.1.0"
+  }
+}

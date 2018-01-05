@@ -1,0 +1,24 @@
+template(name="dataShow")
+  h2 #{experimentName}
+  ul
+    each allData
+      li #{createdFormatted} : experimenter #{ experimenterEmail }
+        a(href="/d/#{experimentName}/csv/#{_id}") view csv
+        span  |  
+        a(href="/d/#{experimentName}/json/#{_id}") view json
+        //- : participant #{ participantId }
+
+
+template(name="dataShowCSV")
+  h2 
+    a(href="/d/#{experimentName}") #{experimentName}
+  p created : #{createdFormatted}
+  p(style='white-space: pre-wrap;font-family:"Lucida Console", Monaco, monospace') 
+    pre #{csvData}
+
+template(name="dataShowJSON")
+  h2 
+    a(href="/d/#{experimentName}") #{experimentName}
+  p created : #{createdFormatted}
+  p(style='white-space: pre-wrap;font-family:"Lucida Console", Monaco, monospace') 
+    pre #{jsonData}

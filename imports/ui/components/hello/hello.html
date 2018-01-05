@@ -1,0 +1,27 @@
+<template name="hello">
+  <h1>Experiments</h1>
+  <table class="striped">
+    <thead>
+      <tr>
+        <td>name</td>
+        <td></td>
+        <td></td>
+        <td>created</td>
+        <td>last updated</td>
+        
+      </tr>
+    </thead>
+    <tbody>
+      {{ #each experiments }}
+        <tr>
+          <td> {{experimentName}} </td>
+          <td> <a href="/e/{{experimentName}}">run experiment</a> </td>
+          <td> <a href="/d/{{experimentName}}">view data</a> </td>
+          <td> {{createdFormatted}} </td>
+          <td> {{lastUpdatedFormatted}} </td>
+        </tr>
+      {{ /each}}
+    </tbody>
+  </table>
+  
+</template>

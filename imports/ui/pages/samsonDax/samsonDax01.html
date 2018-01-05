@@ -1,0 +1,22 @@
+<template name="App_samsonDax01">
+  
+  <div id="jspsych-container">
+    <button id='init-jspsych'>initialize experiment</button>
+  </div>
+  
+</template>
+
+
+<template name="App_samsonDaxShowData">
+  <p>Samson Dax show data page</p>
+  <ul>
+    {{ #each allData }}
+      <li>
+        <a href="/samsonDaxShowData/instance/{{_id}}">
+          {{study}} : {{createdFormatted}} : experimenter {{ experimenterEmail }} : participant {{ participantId }} 
+        </a>
+      </li>
+    {{ /each }}
+  </ul>
+  
+</template>
