@@ -28,6 +28,14 @@ FlowRouter.route('/test', {
   },
 });
 
+FlowRouter.route('/saveData', {
+  name : 'saveData',
+  action : function(params, queryParams) {
+    console.log("Params:", params);
+    console.log("Query Params:", queryParams);
+  }
+});
+
 FlowRouter.route('/e/:_experimentName', {
   action(params, queryParams) {
     BlazeLayout.render('App_body_experiment', { main: 'App_'+params._experimentName });

@@ -1,15 +1,15 @@
-import { Meteor } from 'meteor/meteor'
-import { Template } from 'meteor/templating'
+{ Meteor } = require 'meteor/meteor'
+{ Template } = require 'meteor/templating'
 
-import './samsonDax01.html'
-import {jsPsych} from '/imports/startup/client/jspsych-5.0.3/jspsych.js'
-import '/imports/startup/client/jspsych-5.0.3/plugins/jspsych-text.js'
-import '/imports/startup/client/jspsych-5.0.3/plugins/jspsych-single-stim.js'
-import '/imports/startup/client/jspsych-5.0.3/plugins/jspsych-instructions.js'
+require './samsonDax01.html'
+{jsPsych} = require '/imports/startup/client/jspsych-5.0.3/jspsych.js'
+require '/imports/startup/client/jspsych-5.0.3/plugins/jspsych-text.js'
+require '/imports/startup/client/jspsych-5.0.3/plugins/jspsych-single-stim.js'
+require '/imports/startup/client/jspsych-5.0.3/plugins/jspsych-instructions.js'
 
-import '/imports/startup/client/jspsych-5.0.3/css/jspsych.css'
+require '/imports/startup/client/jspsych-5.0.3/css/jspsych.css'
 
-uuidv4 = require('uuid/v4');
+uuidv4 = require('uuid/v4')
 
 timeline = []
 

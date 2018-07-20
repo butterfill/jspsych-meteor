@@ -1,6 +1,6 @@
-import './hello.html';
+require './hello.html'
 
-import { CollectedData, Experiments } from '/imports/api/links/collections.js'
+{ CollectedData, Experiments } = require '/imports/api/links/collections.js'
 
 Template.hello.onCreated () -> 
   # counter starts at 0

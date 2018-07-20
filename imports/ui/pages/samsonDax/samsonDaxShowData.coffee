@@ -1,9 +1,9 @@
-import { Meteor } from 'meteor/meteor'
-import { Template } from 'meteor/templating'
+{ Meteor } = require 'meteor/meteor'
+{ Template } = require 'meteor/templating'
 
-import { CollectedData } from '/imports/api/links/collections.js'
+{ CollectedData } = require '/imports/api/links/collections.js'
 
-import './samsonDax01.html' # contains samsonDaxShowData template as well
+require './samsonDax01.html' # contains samsonDaxShowData template as well
 
 
 

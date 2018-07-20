@@ -29,7 +29,8 @@ FlowRouter.triggers.enter(
       'resetPwd',
       'verifyEmail',
       'resendVerificationEmail',
-      'termsOfUse'
+      'termsOfUse',
+      'saveData'
     ]
   }
 ); 

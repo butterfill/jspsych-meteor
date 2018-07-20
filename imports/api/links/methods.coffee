@@ -1,10 +1,10 @@
-import { Meteor } from 'meteor/meteor';
-import { check } from 'meteor/check';
-import { CollectedData, Experiments } from '/imports/api/links/collections.js'
+{ Meteor } = require 'meteor/meteor'
+{ check } = require 'meteor/check'
+{ CollectedData, Experiments } = require '/imports/api/links/collections.js'
 
 Meteor.methods 'data.insert': (data) ->
-  if !Meteor.userId()
-    throw new (Meteor.Error)('not-authorized')
+  # if !Meteor.userId()
+  #   throw new (Meteor.Error)('not-authorized')
   if !data.experimentName or data.experimentName is ''
     throw new (Meteor.Error)('experimentName must be specified when calling data.insert method')
   data.created = new Date()
