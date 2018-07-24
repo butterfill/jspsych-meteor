@@ -1,3 +1,4 @@
+// works with  mup 1.4.5 (pnpm i -g mup)
 module.exports = {
   servers: {
     one: {
