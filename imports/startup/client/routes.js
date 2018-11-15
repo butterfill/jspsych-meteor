@@ -7,6 +7,7 @@ import '../../ui/layouts/body/body.js';
 import '../../ui/pages/home/home.js';
 import '../../ui/pages/dataShow.coffee';
 import '../../ui/pages/samsonDax/samsonDax01.coffee';
+import '../../ui/pages/samsonDax/abandonedGoalsAdults.coffee';
 import '../../ui/pages/samsonDax/samsonDaxShowData.coffee';
 import '../../ui/pages/auth/auth.js';
 import '../../ui/pages/not-found/not-found.js';
@@ -35,6 +36,13 @@ FlowRouter.route('/saveData', {
     console.log("Query Params:", queryParams);
   }
 });
+
+FlowRouter.route('/e1', {
+  action(params, queryParams) {
+    BlazeLayout.render('App_e1');
+  },
+});
+
 
 FlowRouter.route('/e/:_experimentName', {
   action(params, queryParams) {

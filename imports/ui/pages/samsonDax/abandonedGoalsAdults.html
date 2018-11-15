@@ -1,18 +1,19 @@
-<template name="App_samsonDax01">
+<template name="App_abandonedGoalsAdults">
   <div id="jspsych-container">
     <button id='init-jspsych'>initialize experiment</button>
     <p id='please-wait' style='display:none;'>please wait ...</p>
   </div>
   
 </template>
+  
+  
 
-
-<template name="App_samsonDaxShowData">
-  <p>Samson Dax show data page</p>
+<template name="App_abandonedGoalsAdultsShowData">
+  <p>abandonedGoalsAdults show data page</p>
   <ul>
     {{ #each allData }}
       <li>
-        <a href="/samsonDaxShowData/instance/{{_id}}">
+        <a href="/abandonedGoalsAdultsShowData/instance/{{_id}}">
           {{study}} : {{createdFormatted}} : experimenter {{ experimenterEmail }} : participant {{ participantId }} 
         </a>
       </li>
