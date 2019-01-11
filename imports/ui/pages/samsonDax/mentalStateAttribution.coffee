@@ -2,7 +2,7 @@
 { Template } = require 'meteor/templating'
 
 
-require './abandonedGoalsAdults.html'
+require './mentalStateAttribution.html'
 {jsPsych} = require '/imports/startup/client/jspsych-5.0.3/jspsych.js'
 require '/imports/startup/client/jspsych-5.0.3/plugins/jspsych-text.js'
 require '/imports/startup/client/jspsych-5.0.3/plugins/jspsych-single-stim.js'
@@ -90,83 +90,19 @@ createLinesOfStory = (sentences) ->
     timing_post_trial: 0
   }
 
-# narrative 1, complete goal
 story11a = [
-  'Betty had just woken up.'
-  'She decided to bake a cake.'
-  'She put on an apron.'
-  'She got milk out of the fridge.'
-  'But then she saw that it was time to go to work.'
-  'She had an important meeting that morning.'
-  'She finished making the cake quickly.'
-  'She got straight in her car.'
-  'She drove straight to work.'
-  'She arrived and went straight to her morning meeting.'
-]
-story11b = [
-  'At the meeting, Betty’s boss asked her to present her latest findings.'
-  'She was nervous, but presented the confidently.'
-  'Her presentation was well received.'
-  'After the meeting, the boss offered Betty a promotion.'
+  'Fred is Betty’s co-worker. When with Betty’s friends he commends her competence. When with Betty’s bosses he disparages her competence.'
 ]
 questions1 = [
-  'Did the story involve a cake.'
-  'Did the story involve Zortan.'
-  'Did the story involve baking.'
-  'Did the story involve a car.'
-  'Did the story involve a meeting.'
-  'Did the story involve coffee.'
-  'Did the story involve milk.'
-  'Did the story involve a bus.'
+  'Betty is inviting some friends to a dinner party. She is considering whether to include Fred. Betty wonders whether Fred thinks she is competent. Does he?'
 ]
-
-# narrative 1, incomplete
-story12a = [
-  'Betty had just woken up.'
-  'She decided to bake a cake.'
-  'She put on an apron.'
-  'She got milk out of the fridge.'
-  'But then she saw that it was time to go to work.'
-  'She had an important meeting that morning.'
-  'She decided that she would have to find time for the cake later'
-  'She got straight in her car.'
-  'She drove straight to work.'
-  'She arrived and went straight to her morning meeting.'
-]
-story12b = [
-  'At the meeting, Betty’s boss asked her to present her latest findings.'
-  'She was nervous, but presented the confidently.'
-  'Her presentation was well received.'
-  'After the meeting, the boss offered Betty a promotion.'
-]
-
-# narrative 1, abandoned
-story13a = [
-  'Betty had just woken up.'
-  'She decided to bake a cake.'
-  'She put on an apron.'
-  'She got milk out of the fridge.'
-  'But then she saw that it was time to go to work.'
-  'She had an important meeting that morning.'
-  'She decided that she would not make the cake after all'
-  'She got straight in her car.'
-  'She drove straight to work.'
-  'She arrived and went straight to her morning meeting.'
-]
-story13b = [
-  'At the meeting, Betty’s boss asked her to present her latest findings.'
-  'She was nervous, but presented the confidently.'
-  'Her presentation was well received.'
-  'After the meeting, the boss offered Betty a promotion.'
-]
-
-# TODO:
-# from the three naratives, pick one incomplete, one abandoned and one complete
-# randomise order in which the stories are presented.
 
 timeline.push createLinesOfStory( story11a )
 timeline.push createQuestions( questions1 )
-timeline.push createLinesOfStory( story11b )
+
+
+
+
 
 
 
@@ -174,7 +110,7 @@ imagesToPreload = [
 ]
 
 
-Template.App_abandonedGoalsAdults.events
+Template.App_mentalStateAttribution.events
   'click #init-jspsych' : (event, instance) ->
     $('#init-jspsych').hide()
     $('#please-wait').show()

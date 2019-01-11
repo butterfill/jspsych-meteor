@@ -1,0 +1,25 @@
+<template name="App_mentalStateAttribution">
+    <p>Hi!!!</p>
+  <div id="jspsych-container">
+    <button id='init-jspsych'>initialize experiment</button>
+    <p id='please-wait' style='display:none;'>please wait ...</p>
+  </div>
+  
+</template>
+  
+  
+
+<template name="App_mentalStateAttributionShowData">
+  <p>mentalStateAttribution show data page</p>
+  <p>hi</p>
+  <ul>
+    {{ #each allData }}
+      <li>
+        <a href="/mentalStateAttributionShowData/instance/{{_id}}">
+          {{study}} : {{createdFormatted}} : experimenter {{ experimenterEmail }} : participant {{ participantId }} 
+        </a>
+      </li>
+    {{ /each }}
+  </ul>
+  
+</template>

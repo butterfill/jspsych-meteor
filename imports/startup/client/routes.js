@@ -8,6 +8,7 @@ import '../../ui/pages/home/home.js';
 import '../../ui/pages/dataShow.coffee';
 import '../../ui/pages/samsonDax/samsonDax01.coffee';
 import '../../ui/pages/samsonDax/abandonedGoalsAdults.coffee';
+import '../../ui/pages/samsonDax/mentalStateAttribution.coffee';
 import '../../ui/pages/samsonDax/samsonDaxShowData.coffee';
 import '../../ui/pages/auth/auth.js';
 import '../../ui/pages/not-found/not-found.js';
@@ -46,6 +47,7 @@ FlowRouter.route('/e1', {
 
 FlowRouter.route('/e/:_experimentName', {
   action(params, queryParams) {
+    console.log('App_'+params._experimentName)
     BlazeLayout.render('App_body_experiment', { main: 'App_'+params._experimentName });
   },
 });
