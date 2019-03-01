@@ -491,7 +491,6 @@ expSets = [
         
       ]
       incomplete : [
-        
         'His source told him to stay well shaven.'
         'So he decided to shave.'
         'He grabbed his razor.'
@@ -544,7 +543,7 @@ expConditionOrder = jsPsych.randomization.shuffle [
   'abandoned'
 ]
 for e, idx in expSets
-  condition = expConditionOrder.pop()
+  condition = expConditionOrder[idx]
   e.condition = condition
   e.story = e.stories[condition]
   e.storyId = idx
@@ -729,25 +728,25 @@ timeline.push createInstructions([
   storyInstructions
 ])
 
-# # --------------
-# # familiarization story
+# --------------
+# familiarization story
 
-# timeline.push createLinesOfStory( familiarisation.story, familiarisation )
-# timeline.push createQuestions( familiarisation.questions, familiarisation )
+timeline.push createLinesOfStory( familiarisation.story, familiarisation )
+timeline.push createQuestions( familiarisation.questions, familiarisation )
 
-# # --------------
-# # familiarization story
+# --------------
+# familiarization story
 
-# for e in expSets
-#   timeline.push createInstructions([
-#     """
-#       <p>That’s the end of those questions. Now for another story.</p>
-#       <p>Press the space bar to continue.</p>
-#     """
-#     storyInstructions
-#   ])
-#   timeline.push createLinesOfStory( e.story, e )
-#   timeline.push createQuestions( e.questions, e )
+for e in expSets
+  timeline.push createInstructions([
+    """
+      <p>That’s the end of those questions. Now for another story.</p>
+      <p>Press the space bar to continue.</p>
+    """
+    storyInstructions
+  ])
+  timeline.push createLinesOfStory( e.story, e )
+  timeline.push createQuestions( e.questions, e )
 
 
 
@@ -767,6 +766,15 @@ Template.App_abandonedGoalsAdults.onRendered () ->
       min_width: 1024,
       min_height: 768
     on_finish : () -> 
+      jsPsych.data.addProperties({
+        participantId 
+        familiarisationStoryType
+        expConditionOrder
+        storyIdOrder
+        experimenterId : Meteor.userId() or ''
+        experimenterEmail : Meteor.user()?.emails?[0]?.address or ''
+        experimentName : document.location.pathname.split('/').pop()
+      })
       toInsert = {
         participantId 
         familiarisationStoryType

@@ -19,18 +19,18 @@ AccountsTemplates.configureRoute('signUp')
 AccountsTemplates.configureRoute('changePwd')
 
 // # See https://github.com/meteor-useraccounts/flow-routing
-FlowRouter.triggers.enter(   
-  [AccountsTemplates.ensureSignedIn],
-  {
-    except: [ 
-      'signIn',
-      'signUp',
-      'forgotPwd',
-      'resetPwd',
-      'verifyEmail',
-      'resendVerificationEmail',
-      'termsOfUse',
-      'saveData'
-    ]
-  }
-); 
+// FlowRouter.triggers.enter(   
+//   [AccountsTemplates.ensureSignedIn],
+//   {
+//     except: [ 
+//       'signIn',
+//       'signUp',
+//       'forgotPwd',
+//       'resetPwd',
+//       'verifyEmail',
+//       'resendVerificationEmail',
+//       'termsOfUse',
+//       'saveData'
+//     ]
+//   }
+// ); 

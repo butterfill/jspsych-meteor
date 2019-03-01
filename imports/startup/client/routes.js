@@ -17,9 +17,9 @@ import '../../ui/pages/not-found/not-found.js';
 FlowRouter.route('/', {
   name: 'App.home',
   action() {
-    BlazeLayout.render('App_body', { main: 'App_home' });
-  },
-});
+    BlazeLayout.render('App_body', { main: 'App_home' })
+  }
+})
 
 
 FlowRouter.route('/test', {
@@ -27,61 +27,60 @@ FlowRouter.route('/test', {
   name: 'App.home',
   action() {
     BlazeLayout.render('App_body', { main: 'App_test' });
-  },
-});
+  }
+})
 
 FlowRouter.route('/saveData', {
+  triggersEnter: [AccountsTemplates.ensureSignedIn],
   name : 'saveData',
   action : function(params, queryParams) {
     console.log("Params:", params);
     console.log("Query Params:", queryParams);
   }
-});
+})
 
 FlowRouter.route('/e1', {
   action(params, queryParams) {
-    BlazeLayout.render('App_e1');
-  },
-});
-
+    BlazeLayout.render('App_e1')
+  }
+})
 
 FlowRouter.route('/e/:_experimentName', {
   action(params, queryParams) {
     console.log('App_'+params._experimentName)
-    BlazeLayout.render('App_body_experiment', { main: 'App_'+params._experimentName });
-  },
-});
+    BlazeLayout.render('App_body_experiment', { main: 'App_'+params._experimentName })
+  }
+})
 
 FlowRouter.route('/d/samsonDaxShowData', {
   triggersEnter: [AccountsTemplates.ensureSignedIn],
   name: 'App.samsonDaxShowData',
   action() {
     BlazeLayout.render('App_body', { main: 'App_samsonDaxShowData' });
-  },
-});
+  }
+})
 
 FlowRouter.route('/d/:_experimentName', {
+  triggersEnter: [AccountsTemplates.ensureSignedIn],
   action() {
-    BlazeLayout.render('App_body', { main: 'dataShow' });
-  },
-});
+    BlazeLayout.render('App_body', { main: 'dataShow' })
+  }
+})
 FlowRouter.route('/d/:_experimentName/csv/:_id', {
+  triggersEnter: [AccountsTemplates.ensureSignedIn],
   action() {
-    BlazeLayout.render('App_body', { main: 'dataShowCSV' });
-  },
-});
+    BlazeLayout.render('App_body', { main: 'dataShowCSV' })
+  }
+})
 FlowRouter.route('/d/:_experimentName/json/:_id', {
+  triggersEnter: [AccountsTemplates.ensureSignedIn],
   action() {
-    BlazeLayout.render('App_body', { main: 'dataShowJSON' });
-  },
-});
-
-
-
+    BlazeLayout.render('App_body', { main: 'dataShowJSON' })
+  }
+})
 
 FlowRouter.notFound = {
   action() {
-    BlazeLayout.render('App_body', { main: 'App_notFound' });
-  },
-};
-
+    BlazeLayout.render('App_body', { main: 'App_notFound' })
+  }
+}
