@@ -99,7 +99,7 @@ familiarisation = {
   }
 }
 
-window.expSets = [
+expSets = [
   {
     questions : jsPsych.randomization.shuffle addPropsToQs([
       'a cake'
@@ -557,13 +557,34 @@ timeline.push createInstructions([
   """
   """
     <p>Before we start, here is some practice. </p>
-    <p>On the next screen, you will see a sentence to read.</p>
-    <p>If the sentence is true, you should press ‘b’ (for TRUE). </p>
-    <p>If the sentence is false, you should press ‘n’ (for FALSE). </p>
-    <p>Press the space bar to walk through this process. </p>
+    <p>On the next screens, you will see a series of questions .</p>
+    <p>When you see a question,</p>
+    <p>if the answer is yes, you should press ‘b’ (for YES);</p>
+    <p>if the answer is no, you should press ‘n’ (for NO). </p>
+    <p>Press the space bar to continue to the question. </p>
   """
 ])
 
+# This only used for Snow is white. etc
+createFamQuestions = (sentences, condition) ->
+  if TESTING
+    timing_post_trial = 0
+  else
+    timing_post_trial = undefined
+  return {
+    type : 'single-stim'
+    is_html : true
+    timeline : ({
+      stimulus :"<p>Question:</p><p style='margin-top:200px; margin-left:25px; font-size: 18pt'>#{sentence.q}</p>"
+      data: {
+        condition
+        sentence 
+        }
+      } for sentence in sentences)
+    choices : ['B', 'N']
+    # prompt : '<p>Is this sentence true or false? Press ‘b’ for TRUE or ‘n’ for FALSE.</p>'
+    timing_post_trial : timing_post_trial
+  }
 
 createQuestions = (sentences, condition) ->
   if TESTING
@@ -576,11 +597,12 @@ createQuestions = (sentences, condition) ->
     timeline : ({
       stimulus :"<p>Question:</p><p style='margin-top:200px; margin-left:25px; font-size: 18pt'>Did the story mention #{sentence.q}?</p>"
       data: {
+        sentence
         value : sentence.val
         category : sentence.cat
         condition
-        }
-      } for sentence in sentences)
+      }
+    } for sentence in sentences)
     choices : ['B', 'N']
     # prompt : '<p>Is this sentence true or false? Press ‘b’ for TRUE or ‘n’ for FALSE.</p>'
     timing_post_trial : timing_post_trial
@@ -590,7 +612,7 @@ createLinesOfStory = (sentences) ->
   return {
     type : 'single-stim'
     is_html : true
-    timeline :  ({stimulus:"<p style='font-size: 18pt'>#{s}</p>"} for s in sentences)
+    timeline :  ({stimulus:"<p style='font-size: 18pt;margin-top:200px; margin-left:25px;'>#{s}</p>"} for s in sentences)
     choices : [' ']
     prompt : '<p>Press the space bar to continue.</p>'
     timing_post_trial: 0
@@ -600,20 +622,31 @@ createLinesOfStory = (sentences) ->
 # --------------
 # trainingBlock1 
   
-timeline.push createQuestions([
-  {q:'Snow is white.'}
-  {q:'Touching fire can burn you.'}
-  {q:'Snow is black.'}
-  {q:'Inhaling cigarette smoke is bad for young children.'}
-])
+timeline.push(createFamQuestions(jsPsych.randomization.shuffle([
+  {q:'Is snow is white?'}
+  {q:'Can touching fire burn you?'}
+  {q:'Is snow black?'}
+  {q:'Is inhaling cigarette smoke bad for young children?'}
+  {q:'Is smoking tobacco good for young children?'}
+  {q:'Can birds fly?'}
+  {q:'Can pigs fly?'}
+])))
 
 
 timeline.push createInstructions([
   """
-    <p>That’s the end of the practice. Now for the experiment. Press the space bar to advance to the next slide.</p>
+    <p>That’s the end of the practice. Now for the experiment.</p>
+    <p>Press the space bar to advance to the next slide.</p>
   """
   """
-    <p>Please read the following story carefully.  After the story you will be asked to answer some questions about it.</p>
+    <p>Please read the following story carefully.</p>
+    <p>After the story you will be asked to answer some questions about it.</p>
+    <p>&nbsp;</p>
+    <p>When you see a question,</p>
+    <p>if the answer is yes, you should press ‘b’ (for YES);</p>
+    <p>if the answer is no, you should press ‘n’ (for NO). </p>
+    <p>Press the space bar to continue to the question. </p>
+
   """
 ])
 
