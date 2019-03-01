@@ -14,6 +14,8 @@ uuidv4 = require('uuid/v4')
 
 timeline = []
 
+# This only controls timing_post_trial (which it sets to 0, instead of the jsPsych default)
+# I think that timing_post_trial set to 0 is good 
 TESTING = true
 
 addPropsToQs = (qs) ->
