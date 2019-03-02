@@ -1,6 +1,6 @@
 { Meteor } = require 'meteor/meteor'
 { Template } = require 'meteor/templating'
-
+{ ReactiveVar } = require 'meteor/reactive-var'
 
 require './abandonedGoalsAdults.html'
 {jsPsych} = require '/imports/startup/client/jspsych-6.0.5/jspsych.js'
@@ -565,6 +565,7 @@ createInstructions = (inst) ->
   for page in inst
     trial_duration = 4000
     trial_duration = 2000 if page.length < 100
+    trial_duration = 0 if TESTING
     res.push {
       type : 'html-keyboard-response'
       show_clickable_nav: false
@@ -737,28 +738,30 @@ addAllToTimeline timeline, createInstructions([
   storyInstructions
 ])
 
-# # --------------
-# # familiarization story
+# --------------
+# familiarization story
 
-# timeline.push createLinesOfStory( familiarisation.story, familiarisation )
-# timeline.push createQuestions( familiarisation.questions, familiarisation )
+timeline.push createLinesOfStory( familiarisation.story, familiarisation )
+timeline.push createQuestions( familiarisation.questions, familiarisation )
 
-# # --------------
-# # familiarization story
+# --------------
+# familiarization story
 
-# for e in expSets
-#   addAllToTimeline timeline, createInstructions([
-#     """
-#       <p>That’s the end of those questions. Now for another story.</p>
-#     """
-#     storyInstructions
-#   ])
-#   timeline.push createLinesOfStory( e.story, e )
-#   timeline.push createQuestions( e.questions, e )
+for e in expSets
+  addAllToTimeline timeline, createInstructions([
+    """
+      <p>That’s the end of those questions. Now for another story.</p>
+    """
+    storyInstructions
+  ])
+  timeline.push createLinesOfStory( e.story, e )
+  timeline.push createQuestions( e.questions, e )
 
 
 # -----------------
 # events control
+@expComplete = new ReactiveVar()
+expComplete.set('')
 
 startExperiment = () ->
   jsPsych.init({
@@ -766,9 +769,6 @@ startExperiment = () ->
     # fullscreen : true
     show_progress_bar: false
     timeline : timeline 
-    on_interaction_data_update: (data) ->
-      # (only works >=6.0)
-      console.log data 
     exclusions: # i.e. which browsers to exclude (only works >=6.0)
       min_width: 1024,
       min_height: 768
@@ -797,14 +797,12 @@ startExperiment = () ->
         if err
           alert("Error storing data. See console for details. (#{err})") 
           console.log(err)
+        expComplete.set('g6hjs38')
         $('#jspsych-container').hide()
         $('#afterTheExperiment').show()
         # jsPsych.data.displayData('json')
         console.log jsPsych.data.displayData('json')
-        # # for jsPsych >=6.0 :
         # jsPsych.data.get().localSave('csv', "backup_#{participantId}.csv")
-        # # for jsPsych <6.0 :
-        # jsPsych.data.localSave("backup_#{participantId}.csv", 'csv')
       )
   })
 
@@ -813,6 +811,9 @@ startExperiment = () ->
 
 toast = (msg) ->
   Materialize.toast(msg, 4000)
+
+Template.App_abandonedGoalsAdults.helpers
+  mTurkCode : () -> expComplete.get()
 
 Template.App_abandonedGoalsAdults.events
   'click #startExperiment' : (event, instance) ->
