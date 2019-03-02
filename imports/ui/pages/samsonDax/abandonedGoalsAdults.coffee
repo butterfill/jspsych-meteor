@@ -3,20 +3,22 @@
 
 
 require './abandonedGoalsAdults.html'
-{jsPsych} = require '/imports/startup/client/jspsych-5.0.3/jspsych.js'
-require '/imports/startup/client/jspsych-5.0.3/plugins/jspsych-text.js'
-require '/imports/startup/client/jspsych-5.0.3/plugins/jspsych-single-stim.js'
-require '/imports/startup/client/jspsych-5.0.3/plugins/jspsych-instructions.js'
+{jsPsych} = require '/imports/startup/client/jspsych-6.0.5/jspsych.js'
+# require '/imports/startup/client/jspsych-6.0.5/plugins/jspsych-text.js'
+# require '/imports/startup/client/jspsych-6.0.5/plugins/jspsych-single-stim.js'
+require '/imports/startup/client/jspsych-6.0.5/plugins/jspsych-instructions.js'
+require '/imports/startup/client/jspsych-6.0.5/plugins/jspsych-html-keyboard-response.js'
 
-require '/imports/startup/client/jspsych-5.0.3/css/jspsych.css'
+require '/imports/startup/client/jspsych-6.0.5/css/jspsych.css'
 
 uuidv4 = require('uuid/v4')
+participantId = uuidv4()
+console.log "participantId: #{participantId}"
+experimentName = document.location.pathname.split('/').pop()
 
 timeline = []
 
-# This only controls timing_post_trial (which it sets to 0, instead of the jsPsych default)
-# I think that timing_post_trial set to 0 is good 
-TESTING = true
+TESTING = false
 
 addPropsToQs = (qs) ->
   res = []
@@ -514,7 +516,7 @@ expSets = [
         'So he decided to shave.'
         'He grabbed his razor.'
         'He applied shaving foam to his face.'
-        '20.	But then he heard a noise from the bedroom.'
+        'But then he heard a noise from the bedroom.'
         'He abandoned his shaving and went to investigate.'
         'He went to investigate.'
         'He walked through to the bedroom.'
@@ -559,13 +561,30 @@ console.log storyIdOrder
 # functions to create stimuli and prompts
 
 createInstructions = (inst) ->
-  return {
-    type : 'instructions'
-    show_clickable_nav: true
-    key_forward : 32   # space bar
-    pages : inst
-    timing_post_trial: 0
-  }
+  res = []
+  for page in inst
+    trial_duration = 4000
+    trial_duration = 2000 if page.length < 100
+    res.push {
+      type : 'html-keyboard-response'
+      show_clickable_nav: false
+      key_forward : jsPsych.NO_KEYS
+      trial_duration : trial_duration
+      response_ends_trial : false
+      stimulus : page
+      timing_post_trial: 0
+      data : {
+        condition : 'delayForReadingInstructions'
+      }
+    }
+    res.push {
+      type : 'instructions'
+      show_clickable_nav: false
+      key_forward : 32   # space bar
+      pages : ["#{page}<p>&nbsp;</p><p>When you are ready, press the space bar to continue.</p>"]
+      timing_post_trial: 0
+    }
+  return res
 
 on_finish = (data) ->
   if data.key_press is 78 # i.e. 'n'
@@ -583,15 +602,12 @@ on_finish = (data) ->
 
 # This only used for Is snow white? etc
 createFamQuestions = (sentences, condition) ->
-  if TESTING
-    timing_post_trial = 0
-  else
-    timing_post_trial = undefined
+  timing_post_trial = 0
   return {
-    type : 'single-stim'
+    type : 'html-keyboard-response'
     is_html : true
     timeline : ({
-      prompt :"<p>Question:</p><p style='margin-top:200px; margin-left:25px; font-size: 18pt'>#{sentence.q}</p>"
+      stimulus :"<p>Question:</p><p style='margin-top:200px; margin-left:25px; font-size: 18pt'>#{sentence.q}</p>"
       data: {
         sentence 
         condition
@@ -599,21 +615,17 @@ createFamQuestions = (sentences, condition) ->
         }
       } for sentence in sentences)
     choices : ['B', 'N']
-    # prompt : '<p>Is this sentence true or false? Press ‘b’ for TRUE or ‘n’ for FALSE.</p>'
     timing_post_trial : timing_post_trial
     on_finish : on_finish
   }
 
 createQuestions = (sentences, e) ->
-  if TESTING
-    timing_post_trial = 0
-  else
-    timing_post_trial = undefined
+  timing_post_trial = 0
   return {
-    type : 'single-stim'
+    type : 'html-keyboard-response'
     is_html : true
     timeline : ({
-      prompt :"""
+      stimulus :"""
         <p>Question:</p>
         <p style='margin-top:200px; margin-left:25px; font-size: 18pt'>Did the story mention #{sentence.q}?</p>
       """
@@ -626,7 +638,6 @@ createQuestions = (sentences, e) ->
       }
     } for sentence in sentences)
     choices : ['B', 'N']
-    # prompt : '<p>Is this sentence true or false? Press ‘b’ for TRUE or ‘n’ for FALSE.</p>'
     timing_post_trial : timing_post_trial
     on_finish : on_finish
 
@@ -634,10 +645,10 @@ createQuestions = (sentences, e) ->
 
 createLinesOfStory = (sentences, e) ->
   return {
-    type : 'single-stim'
+    type : 'html-keyboard-response'
     is_html : true
     timeline :  ({
-      prompt: """<p style='font-size: 18pt;margin-top:200px; margin-left:25px;'>#{s}</p>"""
+      stimulus: """<p style='font-size: 18pt;margin-top:200px; margin-left:25px;'>#{s}</p>"""
       data: {
           sentence : s
           condition : e.condition
@@ -645,35 +656,34 @@ createLinesOfStory = (sentences, e) ->
         }
       } for s in sentences)
     choices : [' ']
-    prompt : '<p>Press the space bar to continue.</p>'
     timing_post_trial: 0
   }
 
 
+addAllToTimeline = (timeline, trials) ->
+  timeline.push(t) for t in trials
+
 # --------------
 # timeline construction
-
-timeline.push createInstructions([
+addAllToTimeline timeline, createInstructions([
   """
-    <p>Welcome to the experiment. Press the space bar to continue.</p>
-  """
-  """
+    <p>Welcome to the experiment.</p>
+    <p>&nbsp;</p>
     <p>Before we start, here is some practice. </p>
     <p>On the next screens, you will see a series of questions .</p>
     <p>When you see a question,</p>
     <p style='margin-left:2em;'>if the answer is yes, you should press ‘b’ (for YES);</p>
     <p style='margin-left:2em;'>if the answer is no, you should press ‘n’ (for NO). </p>
-    <p>Press the space bar to continue. </p>
   """
 ])
 
 # a practice where it tells you which key to press!
 timeline.push({
-  type : 'single-stim'
+  type : 'html-keyboard-response'
   is_html : true
   timeline : [
       {
-        prompt :"""
+        stimulus :"""
           <p>Question:</p>
           <p style='margin-top:200px; margin-left:25px; font-size: 18pt'>Is water wet?</p>
           <p  style='margin-left:25px;'>The answer is yes. So you press 'b' for yes.</p>      
@@ -681,7 +691,7 @@ timeline.push({
         choices : ['B']
       }
       {
-        prompt :"""
+        stimulus :"""
           <p>Question:</p>
           <p style='margin-top:200px; margin-left:25px; font-size: 18pt'>Is ice hot?</p>
           <p style='margin-left:25px;'>The answer is no. So you press 'n' for no.</p>      
@@ -711,53 +721,48 @@ timeline.push(createFamQuestions(famQ, 'familiarization-1'))
 
 storyInstructions = """
   <p>Please read the following story carefully.</p>
+  <p>When you have read a line of the story,</p>
+  <p>&nbsp;</p>
   <p>After the story you will be asked to answer some questions about it.</p>
   <p>&nbsp;</p>
-  <p>When you have read a line of the story,</p>
-  <p style='margin-left:25px;'>press the spacebar to continue</p>
-  <p>&nbsp;</p>
   <p>When you want to answer a question,</p>
-  <p style='margin-left:25px;'>if the answer is yes, you should press ‘b’ (for YES);</p>
-  <p style='margin-left:25px;'>if the answer is no, you should press ‘n’ (for NO). </p>
-  <p>Press the space bar to continue. </p>
+  <p style='margin-left:2em;'>if the answer is yes, you should press ‘b’ (for YES);</p>
+  <p style='margin-left:2em;'>if the answer is no, you should press ‘n’ (for NO). </p>
 """
 
-timeline.push createInstructions([
+addAllToTimeline timeline, createInstructions([
   """
     <p>That’s the end of the practice. Now for the experiment.</p>
-    <p>Press the space bar to continue.</p>
   """
   storyInstructions
 ])
 
-# --------------
-# familiarization story
+# # --------------
+# # familiarization story
 
-timeline.push createLinesOfStory( familiarisation.story, familiarisation )
-timeline.push createQuestions( familiarisation.questions, familiarisation )
+# timeline.push createLinesOfStory( familiarisation.story, familiarisation )
+# timeline.push createQuestions( familiarisation.questions, familiarisation )
 
-# --------------
-# familiarization story
+# # --------------
+# # familiarization story
 
-for e in expSets
-  timeline.push createInstructions([
-    """
-      <p>That’s the end of those questions. Now for another story.</p>
-      <p>Press the space bar to continue.</p>
-    """
-    storyInstructions
-  ])
-  timeline.push createLinesOfStory( e.story, e )
-  timeline.push createQuestions( e.questions, e )
-
+# for e in expSets
+#   addAllToTimeline timeline, createInstructions([
+#     """
+#       <p>That’s the end of those questions. Now for another story.</p>
+#     """
+#     storyInstructions
+#   ])
+#   timeline.push createLinesOfStory( e.story, e )
+#   timeline.push createQuestions( e.questions, e )
 
 
-Template.App_abandonedGoalsAdults.onRendered () ->
-  participantId = uuidv4()
-  console.log "participantId: #{participantId}"
-  $('#please-wait').hide()
+# -----------------
+# events control
+
+startExperiment = () ->
   jsPsych.init({
-    display_element : $("#jspsych-container")
+    display_element : "jspsych-container"
     # fullscreen : true
     show_progress_bar: false
     timeline : timeline 
@@ -784,15 +789,18 @@ Template.App_abandonedGoalsAdults.onRendered () ->
         storyIdOrder
         experimenterId : Meteor.userId() or ''
         experimenterEmail : Meteor.user()?.emails?[0]?.address or ''
-        experimentName : document.location.pathname.split('/').pop()
-        data : jsPsych.data.getData()
-        csvData : jsPsych.data.dataAsCSV()
+        experimentName 
+        data : JSON.parse(jsPsych.data.get().json())
+        csvData : jsPsych.data.get().csv()
       }
       Meteor.call('data.insert', toInsert, (err, res) ->
         if err
           alert("Error storing data. See console for details. (#{err})") 
           console.log(err)
-        jsPsych.data.displayData()
+        $('#jspsych-container').hide()
+        $('#afterTheExperiment').show()
+        # jsPsych.data.displayData('json')
+        console.log jsPsych.data.displayData('json')
         # # for jsPsych >=6.0 :
         # jsPsych.data.get().localSave('csv', "backup_#{participantId}.csv")
         # # for jsPsych <6.0 :
@@ -800,4 +808,47 @@ Template.App_abandonedGoalsAdults.onRendered () ->
       )
   })
 
+# Template.App_abandonedGoalsAdults.onRendered () ->
+#   $('#please-wait').hide()
 
+toast = (msg) ->
+  Materialize.toast(msg, 4000)
+
+Template.App_abandonedGoalsAdults.events
+  'click #startExperiment' : (event, instance) ->
+    console.log 'start'
+    consent = $("#consent").prop('checked')
+    age = parseInt($('#age').val())
+    gender = $('input[name="gender"]:checked').prop('value')
+    genderDesc = $('#genderDesc').val()
+    proceed = true
+    unless consent is true
+      proceed = false
+      toast "Please confirm you have read and understood the information."
+    unless _.isFinite(age)
+      proceed = false
+      toast "Please enter you age, which must be a number in years, e.g. 21."
+    unless gender?
+      proceed = false
+      toast "Please specify a gender or indicate that you would prefer not to answer."
+    if proceed
+      Materialize.Toast.removeAll()
+      toast "Saving your data ..."
+      toInsert = {
+        participantId 
+        experimentName 
+        experimenterId : Meteor.userId() or ''
+        experimenterEmail : Meteor.user()?.emails?[0]?.address or ''
+        consent
+        gender
+        genderDesc
+        age
+      }
+      Meteor.call 'personalInfo.insert', toInsert, (err, res) ->
+        Materialize.Toast.removeAll()
+        if err
+         toast "Error storing your data. Sorry, cannot continue (#{err})"
+        else
+          $('#introAndConsent').hide()
+          $('#jspsych-container').show()
+          startExperiment()

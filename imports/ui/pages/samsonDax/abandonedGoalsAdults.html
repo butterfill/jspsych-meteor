@@ -1,8 +1,122 @@
 <template name="App_abandonedGoalsAdults">
-  <div id="jspsych-container">
-    <p id='please-wait'>please wait ...</p>
+  <div id="jspsych-container" style='display:none;'>
   </div>
   
+  <div id="afterTheExperiment" style='display:none;'>
+     <p>
+      Thanks for your participation. The M-Turk Code is g6hjs38
+     </p> 
+  </div>
+
+  <div id="introAndConsent">
+    <h4>Welcome</h4>
+    <p>
+      You are invited to participate in a study that is led by Alexander Green, Sam Clarke, Stephen Butterfill and John Michael.
+    </p>
+    <h4>Potential risks</h4>
+    <p>
+      Any risks associated with participation in this experiment are equivalent to those encountered in normal everyday life conditions.
+    </p>
+    <h4>Your rights as a participant</h4>
+    <p>
+      Participation in this study is voluntary. You may choose not to participate, and you may withdraw at any time during the study without giving any reason. After you have completed or withdrawn from the study, you may ask that your data be voided.
+    </p>
+    <p>
+      <strong style='color:red;'>UPDATE?! </strong>
+      Your payment will be determined by a randomly selected trial. 
+      The amount and time at which the your payment is received is fully determined by your choices.
+    </p>
+    <p>
+      If you choose to withdraw before or after the completion of the study, 
+      you will not be paid.
+    </p>
+    <h4>Data storage and protection</h4>
+    <p>
+      Your personal information or experiment results will not be shared with any other participants. 
+      Any information we collect from you will be held confidential and your personal information 
+      will be separate from your experiment results. All data we collect from you will thus be anonymous. 
+      After publication, your anonymised data may be made available in an online repository 
+      for the scientific community.
+    </p>
+    <h4>Questions or concerns?</h4>
+    <p>
+        You will be provided with contact information to communicate your concerns at the end of the study. 
+    </p>
+    <h4>Complaints?</h4>
+    <p>
+        Any complaint about the way you have been dealt with during the study or any possible harm you might have suffered will be addressed. Please address your complaint to the head of research governance, who is a senior University of Warwick official entirely independent of this study:
+    </p>
+    <p style='margin-left:1em;'>
+        Head of Research Governance
+        <br>
+        Research & Impact Services
+        <br>
+        University House
+        <br>
+        University of Warwick
+        <br>
+        Coventry
+        <br>
+        CV4 8UW
+        <br>
+         
+    </p>
+    <h4>Contact information</h4>
+    <p>
+      Alexander Green
+      <br>
+      (Tel: 024 765 22323) Alexander.P.Green@warwick.ac.uk
+    </p>
+    <h4>About You</h4>
+    <form action='#'>
+      <p>
+        <input id='consent' name='consent' type='checkbox' />
+        <label for='consent'>
+          <span>
+            I confirm that I have read and understand the information above. I have had the opportunity to consider the information, and to decide whether or not to participate. I understand that my participation is voluntary and that I am free to withdraw at any time, without giving any reason. I agree to take part in the above research study. I understand that my data are recorded for statistical purposes. 
+          </span>
+        </label>
+      </p>
+      <p>
+        <label for='age' style='color:black; font-size:15px;'>
+          Age in years: &nbsp;
+        </label>
+        <input id='age' name='age' type='' />
+      </p>
+      <p>Gender:</p>
+      <p>
+        <ul>
+          <li>
+            <input type='radio' name='gender' id='female' value='female'/>
+            <label for='female'>
+              female
+            </label>
+          </li>
+          <li>
+            <input type='radio' name='gender' id='male' value='male'/>
+            <label for='male'>
+              male
+            </label>
+          </li>
+          <li>
+            <input type='radio' name='gender' id='other' value='other'/>
+            <label for='other'>
+              other &nbsp;
+              <input id='genderDesc' name='genderDesc' type='' />
+            </label>
+          </li>
+          <li>
+            <input type='radio' name='gender' id='preferNotToSay' value='preferNotToSay'/>
+            <label for='preferNotToSay'>
+              prefer not to say
+            </label>
+          </li>
+        </ul>
+      </p>
+    </form>
+    <button id='startExperiment'>Start the Experiment</button>
+    <p style='margin-bottom:100px'></p>
+  </div>
 </template>
   
   

@@ -1,6 +1,6 @@
 { Meteor } = require 'meteor/meteor'
 { check } = require 'meteor/check'
-{ CollectedData, Experiments } = require '/imports/api/links/collections.js'
+{ CollectedData, PersonalInfo, Experiments } = require '/imports/api/links/collections.js'
 
 Meteor.methods 'data.insert': (data) ->
   # if !Meteor.userId()
@@ -21,4 +21,11 @@ Meteor.methods 'data.insert': (data) ->
       experimentName: data.experimentName
       created: new Date()
       lastUpdated: new Date()
+  return res
+
+Meteor.methods 'personalInfo.insert': (data) ->
+  if !data.experimentName or data.experimentName is ''
+    throw new (Meteor.Error)('experimentName must be specified when calling data.insert method')
+  data.created = new Date()
+  res = PersonalInfo.insert(data)
   return res
