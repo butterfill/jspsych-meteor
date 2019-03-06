@@ -200,7 +200,7 @@ expSets = [
         'Dave quickly put on the wash '
         'The he answered the phone.'
         'He received terrible news.'
-        'Dave needed to get to the hospital immediately – XXXX'
+        'Dave needed to get to the hospital immediately – he finished doing laundry'
         'He rushed straight outside.'
         'He flagged the first taxi he saw.'
         'When he arrived he asked where Sandra was.'
