@@ -723,6 +723,7 @@ timeline.push(createFamQuestions(famQ, 'familiarization-1'))
 storyInstructions = """
   <p>Please read the following story carefully.</p>
   <p>When you have read a line of the story,</p>
+  <p style='margin-left:2em;'>press the space bar to continue.</p>
   <p>&nbsp;</p>
   <p>After the story you will be asked to answer some questions about it.</p>
   <p>&nbsp;</p>
