@@ -565,8 +565,8 @@ console.log storyIdOrder
 createInstructions = (inst) ->
   res = []
   for page in inst
-    trial_duration = 16000
-    trial_duration = 8000 if page.length < 100
+    trial_duration = 12000
+    trial_duration = 6000 if page.length < 100
     trial_duration = 0 if TESTING
     res.push {
       type : 'html-keyboard-response'
@@ -764,7 +764,7 @@ for e in expSets
 # -----------------
 # events control
 @expComplete = new ReactiveVar()
-expComplete.set('')
+expComplete.set({})
 
 startExperiment = () ->
   experimentName = document.location.pathname.split('/').pop()
@@ -801,7 +801,10 @@ startExperiment = () ->
         if err
           alert("Error storing data. See console for details. (#{err})") 
           console.log(err)
-        expComplete.set('g6hjs38')
+        expComplete.set({
+          mTurkCode : 'g6hjs38'
+          prolificCompletionURL : 'https://app.prolific.ac/submissions/complete?cc=LCTZN0TL'
+        })
         $('#jspsych-container').hide()
         $('#afterTheExperiment').show()
         # jsPsych.data.displayData('json')
@@ -817,13 +820,15 @@ toast = (msg) ->
   Materialize.toast(msg, 4000)
 
 Template.App_abandonedGoalsAdults.helpers
-  mTurkCode : () -> expComplete.get()
+  mTurkCode : () -> expComplete.get().mTurkCode
+  prolificCompletionURL : () -> expComplete.get().prolificCompletionURL
 
 Template.App_abandonedGoalsAdults.events
   'click #startExperiment' : (event, instance) ->
     experimentName = document.location.pathname.split('/').pop()
     console.log 'start'
     consent = $("#consent").prop('checked')
+    prolificId = $('#prolificId').val()
     age = parseInt($('#age').val())
     gender = $('input[name="gender"]:checked').prop('value')
     genderDesc = $('#genderDesc').val()
@@ -837,12 +842,16 @@ Template.App_abandonedGoalsAdults.events
     unless gender?
       proceed = false
       toast "Please specify a gender or indicate that you would prefer not to answer."
+    unless prolificId?.length > 0
+      proceed = false
+      toast "Please specify your prolific id."
     if proceed
       Materialize.Toast.removeAll()
       toast "Saving your data ..."
       toInsert = {
         participantId 
         experimentName 
+        prolificId
         experimenterId : Meteor.userId() or ''
         experimenterEmail : Meteor.user()?.emails?[0]?.address or ''
         consent
