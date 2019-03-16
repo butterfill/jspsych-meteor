@@ -14,7 +14,9 @@ require '/imports/startup/client/jspsych-6.0.5/css/jspsych.css'
 uuidv4 = require('uuid/v4')
 participantId = uuidv4()
 console.log "participantId: #{participantId}"
-experimentName = document.location.pathname.split('/').pop()
+# seems to cause errors - maybe runs before pathname available
+# experimentName = document.location.pathname.split('/').pop()
+# console.log "experiment name #{document.location.pathname.split('/').pop()}"
 
 timeline = []
 
@@ -563,8 +565,8 @@ console.log storyIdOrder
 createInstructions = (inst) ->
   res = []
   for page in inst
-    trial_duration = 4000
-    trial_duration = 2000 if page.length < 100
+    trial_duration = 16000
+    trial_duration = 8000 if page.length < 100
     trial_duration = 0 if TESTING
     res.push {
       type : 'html-keyboard-response'
@@ -765,6 +767,7 @@ for e in expSets
 expComplete.set('')
 
 startExperiment = () ->
+  experimentName = document.location.pathname.split('/').pop()
   jsPsych.init({
     display_element : "jspsych-container"
     # fullscreen : true
@@ -818,6 +821,7 @@ Template.App_abandonedGoalsAdults.helpers
 
 Template.App_abandonedGoalsAdults.events
   'click #startExperiment' : (event, instance) ->
+    experimentName = document.location.pathname.split('/').pop()
     console.log 'start'
     consent = $("#consent").prop('checked')
     age = parseInt($('#age').val())
