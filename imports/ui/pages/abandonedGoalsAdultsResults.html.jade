@@ -5,4 +5,13 @@ template(name="App_abandonedGoalsAdultsResults")
   if Template.subscriptionsReady
     ul
       each processedData
-        li #{processedData} 
+        li #{this} 
+
+
+  h2 summary by story
+  unless Template.subscriptionsReady
+    p loading ... 
+  if Template.subscriptionsReady
+    ul
+      each processedDataByStory
+        li #{this} 
