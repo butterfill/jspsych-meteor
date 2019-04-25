@@ -2,6 +2,14 @@ template(name="App_abandonedGoalsAdultsResults")
   h2 #{experimentName}
   unless Template.subscriptionsReady
     p loading ... 
+  
+  if Template.subscriptionsReady
+    ul
+      each processedDataSimple
+        li #{this} 
+
+  
+  h2 summary 
   if Template.subscriptionsReady
     ul
       each processedData

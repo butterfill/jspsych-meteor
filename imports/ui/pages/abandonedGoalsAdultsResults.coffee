@@ -1,6 +1,6 @@
 require './abandonedGoalsAdultsResults.html.jade'
 { CollectedData } = require '/imports/api/links/collections.js'
-
+moment = require 'moment'
 
 getGoalNongoal = (v) ->
   row = []
@@ -32,7 +32,7 @@ getRow = (o) ->
   return row
 
 getRowByStory = (o) ->
-  console.log o.summaryByStory
+  # console.log o.summaryByStory
   row = getRowStart(o)
   for i in [0,1,2,3,4,5]
     continue unless o.summaryByStory[i]?
@@ -159,6 +159,52 @@ for i in [0,1,2,3,4,5]
     HEADERS_BY_STORY.push(x )
 
 
+HEADERS_SIMPLE = [
+  'participantId'
+  'created'
+  'block'
+  'storyId'
+  'condition'
+  'categoryOfQuestion'
+  'response_is_correct'
+  'rt'
+  'response_key'
+  'question_asked'
+  'answer_required'
+  'jspsych_trial_index'
+
+]
+
+processSimple = (data) ->
+  return [] unless data?
+  res = [HEADERS_SIMPLE]
+  for subjectData in data
+    participantId = subjectData.participantId
+    created = moment(subjectData.created).format("YYYY-MM-DD HH:mm")
+    for trial in subjectData.data
+      continue unless trial.trial_type is 'html-keyboard-response'
+      continue unless trial.sentence?.cat?
+      continue unless trial.condition?
+      cat = 'nongoal'
+      cat = 'goal' if trial.category is 'goal'
+      continue unless trial.storyId?
+      block = subjectData.storyIdOrder.indexOf(trial.storyId)
+      line = [
+        participantId
+        created
+        block
+        trial.storyId
+        trial.condition
+        cat
+        trial.is_correct
+        trial.rt
+        trial.response_key
+        trial.sentence.q
+        trial.sentence.val
+        trial.trial_index
+      ]
+      res.push line
+  return res
 
 process = (data) ->
   return [] unless data?
@@ -197,14 +243,14 @@ process = (data) ->
     line.summary = main
     line.summaryByStory = byStory
     res.push(line)
-  console.log res
+  # console.log res
   forCsv = [HEADERS]
   for line in res
     forCsv.push( getRow(line) )
   forCsvByStory = [HEADERS_BY_STORY]
   for line in res
     forCsvByStory.push( getRowByStory(line) )
-  console.log forCsvByStory
+  # console.log forCsvByStory
   return {forCsv, forCsvByStory}
 
 
@@ -226,6 +272,11 @@ t.helpers
     experimentName = FlowRouter.getParam('_experimentName')
     data = CollectedData.find({experimentName}).fetch()
     return process(data).forCsv
+  processedDataSimple : () ->
+    experimentName = FlowRouter.getParam('_experimentName')
+    data = CollectedData.find({experimentName}).fetch()
+    return processSimple(data)
+    
   processedDataByStory : () ->
     experimentName = FlowRouter.getParam('_experimentName')
     data = CollectedData.find({experimentName}).fetch()
