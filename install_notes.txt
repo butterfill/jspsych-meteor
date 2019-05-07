@@ -1,0 +1,9 @@
+Had a problem with the atmposhere package materialize:materialize
+
+Therefore:
+  Downloaded the source for that package version 0.100.2 from https://github.com/Dogfalo/materialize/
+  (specifically https://github.com/Dogfalo/materialize/releases/download/v0.100.2/materialize-src-v0.100.2.zip)
+  Copied the sass files and materialize.min.js to /client
+  meteor install fourseven:scss (so that sass files compile!)
+  ran meteor npm i jquery hammerjs
+  It works again!

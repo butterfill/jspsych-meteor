@@ -25,7 +25,6 @@ less@2.8.0                    # Leaner CSS language
 practicalmeteor:mocha             # A package for writing and running your meteor app and package tests with mocha
 johanbrook:publication-collector  # Test a Meteor publication by collecting its output
 accounts-password@1.5.1
-materialize:materialize
 useraccounts:materialize
 coffeescript
 modules@0.13.0
