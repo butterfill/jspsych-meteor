@@ -42,8 +42,7 @@ Template.dataShowCSV.helpers
       return d.csvData
     else
       return ""
-    
-    
+ 
 
 Template.dataShowJSON.onCreated () ->
   self = this
@@ -64,3 +63,19 @@ Template.dataShowJSON.helpers
       return JSON.stringify(d.data,undefined,1)
     else
       return ""
+
+
+   
+    
+Template.dataShowAllJSON.onCreated () ->
+  self = this
+  self.autorun () ->
+    experimentName = FlowRouter.getParam('_experimentName')
+    self.subscribe('collectedData.forExperiment', experimentName)
+Template.dataShowAllJSON.helpers 
+  experimentName : () -> 
+    FlowRouter.getParam('_experimentName')
+  allData : () -> 
+    experimentName = FlowRouter.getParam('_experimentName')
+    d = CollectedData.find({experimentName}).fetch()
+    return JSON.stringify(d,undefined,1)

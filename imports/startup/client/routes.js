@@ -86,6 +86,12 @@ FlowRouter.route('/d/:_experimentName/json/:_id', {
     BlazeLayout.render('App_body', { main: 'dataShowJSON' })
   }
 })
+FlowRouter.route('/d/:_experimentName/all_json', {
+  triggersEnter: [AccountsTemplates.ensureSignedIn],
+  action() {
+    BlazeLayout.render('App_body', { main: 'dataShowAllJSON' })
+  }
+})
 
 FlowRouter.notFound = {
   action() {

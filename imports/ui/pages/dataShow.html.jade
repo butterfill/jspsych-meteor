@@ -1,5 +1,6 @@
 template(name="dataShow")
   h2 #{experimentName}
+  p: a(href="/d/#{experimentName}/all_json/") view/download json data for all participants
   ul
     each allData
       li #{createdFormatted} 
@@ -27,3 +28,9 @@ template(name="dataShowJSON")
   p created : #{createdFormatted}
   p(style='white-space: pre-wrap;font-family:"Lucida Console", Monaco, monospace') 
     pre #{jsonData}
+
+template(name="dataShowAllJSON")
+  h2 
+    a(href="/d/#{experimentName}") #{experimentName}
+  p(style='white-space: pre-wrap;font-family:"Lucida Console", Monaco, monospace') 
+    pre #{allData}
